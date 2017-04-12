@@ -257,8 +257,10 @@ function parse_list_networks(callback) {
         if (error) {
             callback(error);
         } else {
-            var list_network_results = null;
+            var list_network_results = stdout.trim();
+
             // TODO: perform parsing
+
             return callback(error, list_network_results);
         }
     }
