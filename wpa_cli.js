@@ -243,6 +243,26 @@ function parse_scan_results_interface(callback) {
     };
 }
 
+/**
+ * Parses the output of the list_networks command.
+ *
+ * @private
+ * @static
+ * category wpa_cli
+ * @param {function} callback The callback function.
+ *
+ */
+function parse_list_networks(callback) {
+    return function(error, stdout, stderr) {
+        if (error) {
+            callback(error);
+        } else {
+            var list_network_results = null;
+            // TODO: perform parsing
+            return callback(error, list_network_results);
+        }
+    }
+}
 
 /**
  * Parses the status for wpa network interface.
@@ -413,4 +433,11 @@ function save_config(interface, callback) {
         'save_config'].join(' ');
 
     return this.exec(command, parse_command_interface(callback));
+}
+
+function list_networks(interface, callback) {
+    var command = ['wpa_cli -i',
+        interface,
+        'list_networks'].join(' ');
+        return this.exec(command, parse_list_networks(callback));                  
 }
