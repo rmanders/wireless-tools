@@ -44,7 +44,8 @@ var wpa_cli = module.exports = {
     select_network: select_network,
     scan: scan,
     scan_results: scan_results,
-    save_config: save_config
+    save_config: save_config,
+    list_networks: list_networks
 };
 
 /**
