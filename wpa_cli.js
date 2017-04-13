@@ -249,8 +249,9 @@ function parse_scan_results_interface(callback) {
  *
  * @private
  * @static
- * category wpa_cli
- * @param {function} callback The callback function.
+ * @category wpa_cli
+ * @param {function} callback The callback function, which takes an 
+ *     error object and a networks list of network objects.
  *
  */
 function parse_list_networks(callback) {
@@ -258,11 +259,22 @@ function parse_list_networks(callback) {
         if (error) {
             callback(error);
         } else {
-            var list_network_results = stdout.trim();
+            // perform parsing
+            var output_lines = stdout.trim().split('\n');
+            var networks = [];
+            
+            // Read output starting after the first line
+            for (var line=1, line<output_lines.length; line++) {
+                var fields = output_lines[line].split('\t');
+                networks.push({
+                    network_id: parseInt(fields[0]),
+                    ssid: fields[1],
+                    bssid: fields[2],
+                    flags: fields[3]
+                });
+            }            
 
-            // TODO: perform parsing
-
-            return callback(error, list_network_results);
+            return callback(error, networks);
         }
     }
 }
