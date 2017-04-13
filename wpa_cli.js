@@ -264,7 +264,7 @@ function parse_list_networks(callback) {
             var networks = [];
             
             // Read output starting after the first line
-            for (var line=1, line<output_lines.length; line++) {
+            for (var line=1; line<output_lines.length; line++) {
                 var fields = output_lines[line].split('\t');
                 networks.push({
                     network_id: parseInt(fields[0]),
