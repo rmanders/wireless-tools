@@ -273,8 +273,7 @@ function parse_list_networks(callback) {
                     flags: fields[3]
                 });
             }            
-
-            return callback(error, networks);
+            callback(error, networks);
         }
     }
 }
