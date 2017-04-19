@@ -275,7 +275,7 @@ function parse_list_networks(callback) {
             }            
             callback(error, networks);
         }
-    }
+    };
 }
 
 /**
