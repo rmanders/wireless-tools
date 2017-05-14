@@ -214,8 +214,7 @@ function parse_scan_results(block) {
             flags: fields[3],
             ssid: fields[4]
         });
-    });
-
+    }
     return results;
 }
 
