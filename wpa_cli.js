@@ -195,32 +195,25 @@ function parse_scan_results(block) {
     var results = [];
     var lines;
     
-    lines = block.split('\n').map(function(item) { return item + "\n"; });
-    lines.forEach(function(entry){
-        var parsed = {};
-        if ((match = entry.match(/([A-Fa-f0-9:]{17})\t/))) {
-            parsed.bssid = match[1].toLowerCase();
+    lines = block.trim().split('\n');
+
+    console.log(lines[0]);
+
+    for (var i=1; i<lines.length; i++) {
+        var fields = lines[i].split('\t');
+
+        // If we have more than five fields, assume the ssid has \t's in it
+        if (fields.length > 5) {
+            fields[4] = fields.splice(4).join('\t');
         }
 
-        if ((match = entry.match(/\t([\d]+)\t+/))) {
-            parsed.frequency = parseInt(match[1], 10);
-        }
-
-        if ((match = entry.match(/([-][0-9]+)\t/))) {
-            parsed.signalLevel = parseInt(match[1], 10);
-        }
-
-        if ((match = entry.match(/\t(\[.+\])\t/))) {
-            parsed.flags = match[1];
-        }
-
-        if ((match = entry.match(/\t([^\t]{1,32}(?=\n))/))) {
-            parsed.ssid = match[1];
-        }
-
-        if(!(Object.keys(parsed).length === 0 && parsed.constructor === Object)){
-            results.push(parsed);
-        }
+        results.push({
+            bssid: fields[0],
+            frequency: fields[1],
+            signalLevel: parseInt(fields[2]),
+            flags: fields[3],
+            ssid: fields[4]
+        });
     });
 
     return results;
