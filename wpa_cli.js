@@ -197,8 +197,7 @@ function parse_scan_results(block) {
     
     lines = block.trim().split('\n');
 
-    console.log(lines[0]);
-
+    // First line contains field names. Start at index 1
     for (var i=1; i<lines.length; i++) {
         var fields = lines[i].split('\t');
 
@@ -209,7 +208,7 @@ function parse_scan_results(block) {
 
         results.push({
             bssid: fields[0],
-            frequency: fields[1],
+            frequency: parseInt(fields[1]),
             signalLevel: parseInt(fields[2]),
             flags: fields[3],
             ssid: fields[4]
